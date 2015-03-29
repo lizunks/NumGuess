@@ -1,0 +1,102 @@
+//file: guess_v1.cpp
+//a game of guessing the numbers
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
+#include<string>
+#define random(x)(rand()%x)
+using namespace std;
+
+int main(){
+	string ans ; int  total_time = 0, win_time = 0;
+
+	srand(time(0));//set the random seed 
+	
+	cout << "Would you like to play the game?(Y/N)" << endl;
+	getline(cin,ans);
+	while (1){           //the answer is restricted to Y/N
+		if(ans=="Y"||ans=="N")break;
+		else{
+			cout << "the answer must be Y or N, please answer it again!" << endl;
+			cout << "Would you like to play the game?(Y/N)" << endl;
+			getline(cin,ans);
+		}
+	}
+
+
+	while (1){
+		int ran[3], lefttime = 7;
+		ran[0] = random(10);
+		for (int i = 1; i < 3; ++i){        //a loop for three different random numbers
+			ran[i] = random(10);
+			for (int j = 0; j <= i - 1; ++j){
+				while (ran[j] == ran[i]) ran[i] = random(10);
+			}
+		}
+
+		while (lefttime > 0){
+			int A_times = 0, B_times = 0, guess[3];  //input the guess
+			cout << "please input your guess numbers!" << endl;
+			cin >> guess[0] >> guess[1] >> guess[2];
+
+			if (!cin){             //the input must be numbers
+				cin.clear();             
+				cin.ignore(100, '\n');
+				cout << "the input must be numbers! please input correctly!" << endl;
+				lefttime--;
+			}
+
+			else{
+				for (int i = 0; i < 3; i++){           //the loop for calculating A and B
+					for (int j = 0; j < 3; j++){
+						if (guess[i] == ran[j]) B_times++;     
+					}
+					if (guess[i] == ran[i]) A_times++;
+				}
+
+				if (A_times == 3){      //the condition for wins
+					cout << "congratulations, your guess are right!" << endl;
+					++win_time;
+					cout << "would you like to continue?" << endl;
+					cin.clear();
+					cin.ignore(100, '\n');
+					getline(cin,ans);
+					while (1){
+						if(ans=="Y"||ans=="N")break;
+						else{
+							cout << "the answer must be Y or N!" << endl;
+							cout << "would you like to continue?" << endl;
+							getline(cin,ans);
+						}
+					}
+					break;
+				}
+				else cout << A_times << "A" << B_times << "B" << endl; //output A and B when the guess is wrong 
+				lefttime--;
+			}
+
+		}
+		++total_time;
+		if (lefttime == 0){
+			cout << "sorry for there's no chance left, the answer should be'" << ran[0] << ran[1] << ran[2] << endl;
+			cout << "would you like to continue?" << endl;
+			cin.clear();
+			cin.ignore(100, '\n');
+			getline(cin,ans);
+			while (1){
+				if(ans=="Y"||ans=="N")break;
+				else{
+					cout << "the answer must be Y or N!" << endl;
+					cout << "would you like to continue？" << endl;
+					getline(cin,ans);
+				}
+			}
+		}
+		if (ans == "N"){
+			cout << "you've already played" << total_time << "game(s) with " << win_time << "game(s) won and " << total_time-win_time << "game(s) lost" << endl; //the game result output when user stop playing
+			break;
+		}
+	}
+	return 0;
+}
+
