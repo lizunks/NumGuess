@@ -15,7 +15,7 @@ int main(){
 	cout << "Would you like to play the game?(Y/N)" << endl;
 	getline(cin,ans);
 	while (1){           //the answer is restricted to Y/N
-		if(ans=="Y"||ans=="N")break;
+		if(ans=="Y"||ans=="N"||ans=="y"||ans=="n")break;
 		else{
 			cout << "the answer must be Y or N, please answer it again!" << endl;
 			cout << "Would you like to play the game?(Y/N)" << endl;
@@ -49,20 +49,22 @@ int main(){
 			else{
 				for (int i = 0; i < 3; i++){           //the loop for calculating A and B
 					for (int j = 0; j < 3; j++){
-						if (guess[i] == ran[j]) B_times++;     
+						if (guess[i] == ran[j]){
+							if(i=0||(i=1&&guess[1]!=guess[0])||(i=2&&(guess[2]!=guess[1])&&(guess[2]!=guess[0]))) B_times++;
+						}   
 					}
 					if (guess[i] == ran[i]) A_times++;
 				}
 
 				if (A_times == 3){      //the condition for wins
-					cout << "congratulations, your guess are right!" << endl;
+					cout << "congratulations, your guess is right!" << endl;
 					++win_time;
 					cout << "would you like to continue?" << endl;
 					cin.clear();
 					cin.ignore(100, '\n');
 					getline(cin,ans);
 					while (1){
-						if(ans=="Y"||ans=="N")break;
+						if(ans=="Y"||ans=="N"||ans=="y"||ans=="n")break;
 						else{
 							cout << "the answer must be Y or N!" << endl;
 							cout << "would you like to continue?" << endl;
@@ -84,7 +86,7 @@ int main(){
 			cin.ignore(100, '\n');
 			getline(cin,ans);
 			while (1){
-				if(ans=="Y"||ans=="N")break;
+				if(ans=="Y"||ans=="N"||ans=="y"||ans=="n")break;
 				else{
 					cout << "the answer must be Y or N!" << endl;
 					cout << "would you like to continue？" << endl;
@@ -92,11 +94,10 @@ int main(){
 				}
 			}
 		}
-		if (ans == "N"){
+		if (ans == "N"||ans=="n"){
 			cout << "you've already played" << total_time << "game(s) with " << win_time << "game(s) won and " << total_time-win_time << "game(s) lost" << endl; //the game result output when user stop playing
 			break;
 		}
 	}
 	return 0;
 }
-
