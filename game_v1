@@ -49,9 +49,7 @@ int main(){
 			else{
 				for (int i = 0; i < 3; i++){           //the loop for calculating A and B
 					for (int j = 0; j < 3; j++){
-						if (guess[i] == ran[j]){
-							if(i=0||(i=1&&guess[1]!=guess[0])||(i=2&&(guess[2]!=guess[1])&&(guess[2]!=guess[0]))) B_times++;
-						}   
+						if ((guess[i] == ran[j])&&i!=j) B_times++; 
 					}
 					if (guess[i] == ran[i]) A_times++;
 				}
